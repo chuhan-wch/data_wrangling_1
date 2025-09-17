@@ -8,7 +8,7 @@ library(tidyverse)
 
 ```{r}
 litters_df = 
-  read_csv("/Users/hazel/Desktop/data_wrangling_1/data/FAS_litters.csv")
+  read_csv(file = "./data/FAS_litters.csv")
 ```
 
 ```{r}
@@ -28,11 +28,29 @@ litters_df
 skimr::skim(litters_df)
 ```
 
+```{r}
+litters_df = 
+    read_csv(file = "./data/FAS_litters.csv",
+        na = c(".", "NA", ""),
+    col_types = cols(
+      Group = col_character(),
+      `Litter Number` = col_character(),
+      `GD0 weight` = col_double(),
+      `GD18 weight` = col_double(),
+      `GD of Birth` = col_integer(),
+      `Pups born alive` = col_integer(),
+      `Pups dead @ birth` = col_integer(),
+      `Pups survive` = col_integer()
+    )
+  )
+tail(litters_df)
+```
+
 ## import pups data
 ```{r}
 pups_df = 
   read_csv(
-    "data/FAS_pups.csv",
+    "./data/FAS_pups.csv",
     skip = 3,
     na=c("NA", ".", "")
   )
@@ -45,7 +63,8 @@ pups_df =
 ```{r}
 library(readxl)
 mlb_df =
-  read_excel("data/mlb11.xlsx")
+  read_excel("./data/mlb11.xlsx", n_max = 20)
+  head(mlb_df, 5)
 ```
 
 ```{r}
@@ -56,6 +75,7 @@ fotr_df =
 ```{r}
 library(haven)
 pulse_df = read_sas("data/public_pulse_data.sas7bdat")
+head(pulse_df, 5)
 ```
 
 ```{r}
@@ -63,6 +83,29 @@ litters_df_base =
   read.csv("data/FAS_litters.csv")
 ```
 
+```{r}
+pups_df_base = read.csv("./data/FAS_litters.csv")
+```
 
 ```{r}
-write_csv
+library(readr)
+pups_df = read_csv("./data/FAS_litters.csv")
+```
+
+```{r}
+class(pups_df_base)
+class(pups_df)
+```
+
+
+```{r}
+print(pups_df_base)
+print(pups_df)
+```
+
+```{r}
+library(janitor)
+pups_df = clean_names(pups_df)
+pups_df$Sex
+pups_df$sex
+```
